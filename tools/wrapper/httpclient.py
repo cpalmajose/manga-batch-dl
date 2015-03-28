@@ -32,9 +32,7 @@ CHARSET_PATTERN = re.compile(r'charset=([\w-]+)')
 class HTTPGetRequest(HTTPConnection, object):
     '''wraps the link into a http GET request to send to the server'''
     def __init__(self, link, retry=5):     
-        self.retry = retry
-        if type(link) != str:
-            raise ValueError("HTTPRequest argument not type (string)")             
+        self.retry = retry          
         try:
             r = HTTP_STRIP_PATTERN.search(link)
             if r:
@@ -46,6 +44,8 @@ class HTTPGetRequest(HTTPConnection, object):
             raise Exception("Invalid URL - ", link)
         except IndexError:
             raise Exception("Invalid URL - ", link)
+        except Exception as e:
+            raise Exception("HTTPGetRequest: " , e)
         
         HTTPConnection.__init__(self, self.main, 80)
         self.request("GET", self.page, headers=headers)

@@ -38,7 +38,7 @@ class Directory:
          
     def write(self, writeobj, mode=None):
         ''' writes the file specified in writeobj '''
-        if type(writeobj) != WriteFile:
+        if not isinstance(writeobj, WriteFile):
             raise ValueError("Must be of class(WriteFile)")
         
         if mode:

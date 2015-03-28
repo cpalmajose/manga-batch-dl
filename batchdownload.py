@@ -5,13 +5,14 @@ from tools.parse import mangareader
 from tools.fileio import fileio
 from tools.wrapper import httpclient
 
-
 import sys
 import getopt
 
 import io
 
+# Needs Fixing
 USAGE = "USAGE: batchdownload.py <url> -h -d[relative directory] -D[full directory]\n"
+
 TIME_FORMAT = "%a_%d_%b_%Y_%H%M%S"
 
 
