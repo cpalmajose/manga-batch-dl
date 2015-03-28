@@ -1,8 +1,3 @@
-'''
-Created on Mar 19, 2015
-
-@author: Chris A
-'''
 import os
 
 # Exception Classes

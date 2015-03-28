@@ -1,8 +1,3 @@
-'''
-Created on Feb 18, 2015
-
-@author: Chris A
-'''
 try:
     from html.parser import HTMLParser
 except ImportError:
@@ -28,7 +23,6 @@ def nextpage(prev):
         elif(len(t)) == 3:
             return prev + "/2"
         
-        print(r.groups())
         return r.group(1) + "/" + str(int(r.group(2)) + 1)    
             
 

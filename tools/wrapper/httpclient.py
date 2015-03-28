@@ -1,8 +1,3 @@
-'''
-Created on Mar 14, 2015
-
-@author: Chris A
-'''
 import re
 import gzip
 import io

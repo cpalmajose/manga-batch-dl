@@ -1,17 +1,14 @@
-'''
-Created on Mar 21, 2015
-
-@author: Chris A
-'''
 from __future__ import print_function
 from time import strftime, gmtime
+
+from tools.parse import mangareader
+from tools.fileio import fileio
+from tools.wrapper import httpclient
+
 
 import sys
 import getopt
 
-import fileio
-import parse
-import wrapper
 import io
 
 USAGE = "USAGE: batchdownload.py <url> -h -d[relative directory] -D[full directory]\n"
@@ -47,11 +44,11 @@ def main(argv):
         cur_time = strftime(TIME_FORMAT, gmtime())
         wdir.mkdir(str(cur_time))
         
-        conn = wrapper.HTTPGetRequest(args[0])
+        conn = httpclient.HTTPGetRequest(args[0])
         print(conn.main)
-        fd = wrapper.HTTPResponse(conn.getresponse())
-        if fd.status == 200 and fd.MIME_type == wrapper.TEXT_HTML:
-            chapterParse = parse.MangaReaderChapter(parse.CHAPTER)
+        fd = httpclient.HTTPResponse(conn.getresponse())
+        if fd.status == 200 and fd.MIME_type == httpclient.TEXT_HTML:
+            chapterParse = mangareader.MangaReaderChapter(mangareader.CHAPTER)
             chapterParse.feed(fd.content)
             if len(chapterParse.links) == 0:
                 print("No Chapter Links")
@@ -63,27 +60,27 @@ def main(argv):
                 wdir.mkdir(''.join([cur_time, "/" , str(chp)]))
                 
                 while not done:
-                    conn2 = wrapper.HTTPGetRequest(str(conn.main) + str(pageLink))
-                    fd2 = wrapper.HTTPResponse(conn2.getresponse())
-                    if fd2.status == 200 and fd.MIME_type == wrapper.TEXT_HTML:
-                        imgParse = parse.MangaReaderImage(parse.IMAGE)
+                    conn2 = httpclient.HTTPGetRequest(str(conn.main) + str(pageLink))
+                    fd2 = httpclient.HTTPResponse(conn2.getresponse())
+                    if fd2.status == 200 and fd.MIME_type == httpclient.TEXT_HTML:
+                        imgParse = mangareader.MangaReaderImage(mangareader.IMAGE)
                         imgParse.feed(fd2.content)
                         if imgParse.imglink:
-                            conn3 = wrapper.HTTPGetRequest(imgParse.imglink)
-                            fd3 = wrapper.HTTPResponse(conn3.getresponse())
-                            if fd3.status == 200 and fd3.MIME_type == wrapper.IMG_JPEG:
+                            conn3 = httpclient.HTTPGetRequest(imgParse.imglink)
+                            fd3 = httpclient.HTTPResponse(conn3.getresponse())
+                            if fd3.status == 200 and fd3.MIME_type == httpclient.IMG_JPEG:
                                 print(''.join(["Downloading: " , imgParse.imglink , ". . ."]), end="")
                                 fstream = io.BytesIO(fd3.content)
                                 filename = ''.join([cur_time , "/" , str(chp) , "/" , str(img) , ".jpeg"])
                                 wdir.write(fileio.WriteFile(filename, fstream), 'wb')
                                 print("done")
-                                pageLink = parse.nextpage(pageLink)
+                                pageLink = mangareader.nextpage(pageLink)
                                 img = img + 1                             
                             else:
                                 print("Error Getting Image")
                         else:
                             print("Error Getting Image Link")
-                            pageLink = parse.nextpage(pageLink)
+                            pageLink = mangareader.nextpage(pageLink)
                             img = img + 1
                     elif fd2.status == 404:
                         print("Finished Downloading Chapter: " + str(chp))
