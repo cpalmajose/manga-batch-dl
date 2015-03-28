@@ -1,5 +1,5 @@
-# manga-batch-dl
-A small Python script to batch download chapters
+# Manga Batch Chapter Download
+A Python script to batch download chapters
 
 Currently works with: 
 - www.mangareader.net

@@ -11,7 +11,7 @@ import getopt
 import io
 
 # Needs Fixing
-USAGE = "USAGE: batchdownload.py <url> -h -d[relative directory] -D[full directory]\n"
+USAGE = "USAGE: batchdownload.py <url> -h | --help -d | --dir[full directory]\n"
 
 TIME_FORMAT = "%a_%d_%b_%Y_%H%M%S"
 
@@ -20,7 +20,7 @@ def main(argv):
    
     d = None
     try:
-        opts, args = getopt.getopt(argv, "hd:D:", ["help", "rdir=", "fdir="])
+        opts, args = getopt.getopt(argv, "hd:", ["help", "dir="])
     except getopt.GetoptError:
         print(USAGE)
         sys.exit(2)
