@@ -18,7 +18,6 @@ How to use the script:
 
    To find out what your HOME path using command line or terminal:
    - Windows: echo %HOMEPATH%
-   - Unix   : echo ~ 
-            echo $HOME
+   - Unix   : echo ~ (or) echo $HOME
 
 
