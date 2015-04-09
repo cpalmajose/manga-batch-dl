@@ -98,7 +98,7 @@ class HTTPResponse():
             self.content = io.BytesIO(self.content)
             self.content = gzip.GzipFile(fileobj=self.content).read()
             
-        if self.charset == 'utf-8':
+        if self.charset == 'utf-8' or self.charset == 'UTF-8':
             self.content = self.content.decode('utf-8')
 
     

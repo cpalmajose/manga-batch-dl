@@ -65,6 +65,7 @@ def main(argv):
                     fd2 = httpclient.HTTPResponse(conn2.getresponse())
                     if fd2.status == 200 and fd.MIME_type == httpclient.TEXT_HTML:
                         imgParse = mangareader.MangaReaderImage(mangareader.IMAGE)
+#print(type(fd2.content))
                         imgParse.feed(fd2.content)
                         if imgParse.imglink:
                             conn3 = httpclient.HTTPGetRequest(imgParse.imglink)
@@ -96,11 +97,12 @@ def main(argv):
     except fileio.DirNotFoundError as e:
         print("\nERROR: " + e.message + "\n")
         sys.exit(2)
-    except Exception as e:
-        print("\nERROR: " + str(e) + "\n")
-        sys.exit(2)
+    #except Exception as e:
+    #    print(type(e))
+    #    print("\nERROR: " + str(e) + "\n")
+    #    sys.exit(2)
     
         
 if __name__ == "__main__":
-    main(sys.argv[1:])
+	main(sys.argv[1:])
     

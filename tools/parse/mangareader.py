@@ -10,10 +10,11 @@ IMAGE = "imgholder"
 
 def nextpage(prev):
     ''' Determines the next page of the the chapter'''
-    oldpattern = re.compile(r'/([\d]+-[\d]+-)([\d]+)(.+)')
+    oldpattern = re.compile(r'(/[\d]+-[\d]+-)([\d]+)(.+)')
     newpattern = re.compile(r'(.+)/([\d]+)$')
     r = oldpattern.search(prev)
     if r:
+        
         return r.group(1) + str(int(r.group(2)) + 1) + r.group(3)
     else:
         r = newpattern.search(prev)
@@ -22,7 +23,7 @@ def nextpage(prev):
             raise Exception("Error with prev link")
         elif(len(t)) == 3:
             return prev + "/2"
-        
+          
         return r.group(1) + "/" + str(int(r.group(2)) + 1)    
             
 
